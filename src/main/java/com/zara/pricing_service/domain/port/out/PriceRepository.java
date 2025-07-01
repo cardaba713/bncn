@@ -1,11 +1,12 @@
 package com.zara.pricing_service.domain.port.out;
 
-import com.zara.pricing_service.domain.model.Price;
+import com.zara.pricing_service.domain.model.PriceVP;
 import com.zara.pricing_service.domain.model.PriceQuery;
-
-import java.util.List;
+import org.springframework.context.annotation.Bean;
+import java.util.Optional;
 
 public interface PriceRepository {
-    List<Price> findApplicablePrices(PriceQuery query);
+    @Bean
+    Optional<PriceVP> findApplicablePrices(PriceQuery query);
 
 }

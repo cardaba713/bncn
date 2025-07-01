@@ -1,17 +1,25 @@
 package com.zara.pricing_service.rest;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 public class PriceRequestDto {
 
+    @Getter
+    @Setter
     @NotNull(message = "Application date is required")
     private LocalDateTime applicationDate;
 
+    @Getter
+    @Setter
     @NotNull(message = "Product ID is required")
     private Long productId;
 
+    @Getter
+    @Setter
     @NotNull(message = "Brand ID is required")
     private Long brandId;
 
@@ -23,27 +31,4 @@ public class PriceRequestDto {
         this.brandId = brandId;
     }
 
-    public LocalDateTime getApplicationDate() {
-        return applicationDate;
-    }
-
-    public void setApplicationDate(LocalDateTime applicationDate) {
-        this.applicationDate = applicationDate;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public Long getBrandId() {
-        return brandId;
-    }
-
-    public void setBrandId(Long brandId) {
-        this.brandId = brandId;
-    }
 }

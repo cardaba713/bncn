@@ -1,19 +1,35 @@
 package com.zara.pricing_service.domain.model;
 
+import lombok.Getter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class Price {
+public class PriceVP {
+    @Getter
     private final Long brandId;
+
+    @Getter
     private final LocalDateTime startDate;
+
+    @Getter
     private final LocalDateTime endDate;
+
+    @Getter
     private final Long priceList;
+
+    @Getter
     private final Long productId;
+
+    @Getter
     private final Integer priority;
+
+    @Getter
     private final BigDecimal price;
+
+    @Getter
     private final String currency;
 
-    public Price(Long brandId, LocalDateTime startDate, LocalDateTime endDate, Long priceList, Long productId, Integer priority, BigDecimal price, String currency) {
+    public PriceVP(Long brandId, LocalDateTime startDate, LocalDateTime endDate, Long priceList, Long productId, Integer priority, BigDecimal price, String currency) {
         this.brandId = brandId;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -26,37 +42,5 @@ public class Price {
 
     public boolean isApplicableAt(LocalDateTime applicationDate) {
         return !applicationDate.isBefore(startDate) && !applicationDate.isAfter(endDate);
-    }
-
-    public Long getBrandId() {
-        return brandId;
-    }
-
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
-
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
-
-    public Long getPriceList() {
-        return priceList;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public String getCurrency() {
-        return currency;
     }
 }

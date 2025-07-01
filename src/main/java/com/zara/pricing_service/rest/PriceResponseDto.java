@@ -1,14 +1,34 @@
 package com.zara.pricing_service.rest;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class PriceResponseDto {
+    @Getter
+    @Setter
     private Long productId;
+
+    @Getter
+    @Setter
     private Long brandId;
+
+    @Getter
+    @Setter
     private Long priceList;
+
+    @Getter
+    @Setter
     private LocalDateTime startDate;
+
+    @Getter
+    @Setter
     private LocalDateTime endDate;
+
+    @Getter
+    @Setter
     private BigDecimal price;
 
     public PriceResponseDto() {
@@ -20,54 +40,6 @@ public class PriceResponseDto {
         this.priceList = priceList;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.price = price;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public Long getBrandId() {
-        return brandId;
-    }
-
-    public void setBrandId(Long brandId) {
-        this.brandId = brandId;
-    }
-
-    public Long getPriceList() {
-        return priceList;
-    }
-
-    public void setPriceList(Long priceList) {
-        this.priceList = priceList;
-    }
-
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

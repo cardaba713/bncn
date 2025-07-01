@@ -1,10 +1,16 @@
 package com.zara.pricing_service.domain.model;
 
 import java.time.LocalDateTime;
+import lombok.Getter;
 
 public class PriceQuery {
+    @Getter
     private final LocalDateTime applicationDate;
+    
+    @Getter
     private final Long productId;
+    
+    @Getter
     private final Long brandId;
 
     public PriceQuery(LocalDateTime applicationDate, Long productId, Long brandId) {
@@ -13,15 +19,4 @@ public class PriceQuery {
         this.brandId = brandId;
     }
 
-    public LocalDateTime getApplicationDate() {
-        return applicationDate;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public Long getBrandId() {
-        return brandId;
-    }
 }

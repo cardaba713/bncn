@@ -1,13 +1,13 @@
 package com.zara.pricing_service.infrastructure.persistence.adapter;
 
-import com.zara.pricing_service.domain.model.Price;
+import com.zara.pricing_service.domain.model.PriceVP;
 import com.zara.pricing_service.domain.model.PriceQuery;
 import com.zara.pricing_service.domain.port.out.PriceRepository;
 import com.zara.pricing_service.infrastructure.persistence.entity.PriceEntity;
 import com.zara.pricing_service.infrastructure.persistence.repository.PriceJpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class PriceRepositoryImpl implements PriceRepository {
@@ -19,23 +19,16 @@ public class PriceRepositoryImpl implements PriceRepository {
     }
 
     @Override
-    public List<Price> findApplicablePrices(PriceQuery query) {
-
-        List<PriceEntity> entities = priceJpaRepository.findApplicablePrices(
+    public Optional<PriceVP> findApplicablePrices(PriceQuery query) {
+        return priceJpaRepository.findApplicablePrices(
                 query.getBrandId(),
                 query.getProductId(),
                 query.getApplicationDate()
-        );
-
-        System.out.println("entities:"+entities.size());
-
-        return entities.stream()
-                .map(this::toDomain)
-                .toList();
+        ).map(this::toDomain);
     }
 
-    private Price toDomain(PriceEntity entity) {
-        return new Price(
+    private PriceVP toDomain(PriceEntity entity) {
+        return new PriceVP(
                 entity.getBrandId(),
                 entity.getStartDate(),
                 entity.getEndDate(),

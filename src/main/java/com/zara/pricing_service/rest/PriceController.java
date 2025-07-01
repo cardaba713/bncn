@@ -1,6 +1,6 @@
 package com.zara.pricing_service.rest;
 
-import com.zara.pricing_service.domain.model.Price;
+import com.zara.pricing_service.domain.model.PriceVP;
 import com.zara.pricing_service.domain.model.PriceQuery;
 import com.zara.pricing_service.domain.port.in.PriceService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,18 +30,17 @@ public class PriceController {
     ) {
         PriceQuery query = new PriceQuery(applicationDate, productId, brandId);
 
-        Optional<Price> price = priceService.findApplicablePrice(query);
+        Optional<PriceVP> price = priceService.findApplicablePrice(query);
 
         if (price.isPresent()) {
             PriceResponseDto response = mapToDto(price.get());
             return ResponseEntity.ok(response);
         } else {
-            System.out.println("NOTfound");
             return ResponseEntity.notFound().build();
         }
     }
 
-    private PriceResponseDto mapToDto(Price price) {
+    private PriceResponseDto mapToDto(PriceVP price) {
         return new PriceResponseDto(
                 price.getProductId(),
                 price.getBrandId(),

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PriceJpaRepository  extends JpaRepository<PriceEntity, Long> {
@@ -17,15 +18,11 @@ public interface PriceJpaRepository  extends JpaRepository<PriceEntity, Long> {
             "p.productId = :productId AND " +
             "p.startDate <= :applicationDate AND " +
             "p.endDate >= :applicationDate " +
-            "ORDER BY p.priority DESC")
-    List<PriceEntity> findApplicablePrices(
+            "ORDER BY p.priority DESC LIMIT 1")
+    Optional<PriceEntity> findApplicablePrices(
             @Param("brandId") Long brandId,
             @Param("productId") Long productId,
             @Param("applicationDate") LocalDateTime applicationDate
     );
-
-    @Query("SELECT p FROM PriceEntity p")
-    List<PriceEntity> findAllX();
-
 
 }

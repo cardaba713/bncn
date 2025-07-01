@@ -1,37 +1,57 @@
 package com.zara.pricing_service.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "PRICES")
 public class PriceEntity {
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
+    @Setter
     @Column(name = "BRAND_ID", nullable = false)
     private Long brandId;
 
+    @Getter
+    @Setter
     @Column(name = "START_DATE", nullable = false)
     private LocalDateTime startDate;
 
+    @Getter
+    @Setter
     @Column(name = "END_DATE", nullable = false)
     private LocalDateTime endDate;
 
+    @Getter
+    @Setter
     @Column(name = "PRICE_LIST", nullable = false)
     private Long priceList;
 
+    @Getter
+    @Setter
     @Column(name = "PRODUCT_ID", nullable = false)
     private Long productId;
 
+    @Getter
+    @Setter
     @Column(name = "PRIORITY", nullable = false)
     private Integer priority;
 
+    @Getter
+    @Setter
     @Column(name = "PRICE", nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
+    @Getter
+    @Setter
     @Column(name = "CURR", nullable = false, length = 3)
     private String currency;
 
@@ -50,30 +70,4 @@ public class PriceEntity {
         this.currency = currency;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public Long getBrandId() { return brandId; }
-    public void setBrandId(Long brandId) { this.brandId = brandId; }
-
-    public LocalDateTime getStartDate() { return startDate; }
-    public void setStartDate(LocalDateTime startDate) { this.startDate = startDate; }
-
-    public LocalDateTime getEndDate() { return endDate; }
-    public void setEndDate(LocalDateTime endDate) { this.endDate = endDate; }
-
-    public Long getPriceList() { return priceList; }
-    public void setPriceList(Long priceList) { this.priceList = priceList; }
-
-    public Long getProductId() { return productId; }
-    public void setProductId(Long productId) { this.productId = productId; }
-
-    public Integer getPriority() { return priority; }
-    public void setPriority(Integer priority) { this.priority = priority; }
-
-    public BigDecimal getPrice() { return price; }
-    public void setPrice(BigDecimal price) { this.price = price; }
-
-    public String getCurrency() { return currency; }
-    public void setCurrency(String currency) { this.currency = currency; }
 }
