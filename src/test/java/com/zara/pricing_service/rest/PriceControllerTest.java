@@ -1,6 +1,5 @@
 package com.zara.pricing_service.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zara.pricing_service.domain.model.Price;
 import com.zara.pricing_service.domain.model.PriceQuery;
 import com.zara.pricing_service.domain.port.in.PriceService;
@@ -8,7 +7,7 @@ import com.zara.pricing_service.infrastructure.persistence.entity.PriceEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
@@ -27,10 +26,7 @@ class PriceControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockBean
+    @MockitoBean
     private PriceService priceService;
 
     @Test
@@ -299,7 +295,7 @@ class PriceControllerTest {
 
     // Tests para cobertura de PriceEntity
     @Test
-    void testPriceEntityConstructor() {
+    void testPriceEntityParameterizedConstructor() {
         // Test del constructor con parámetros
         LocalDateTime startDate = LocalDateTime.of(2020, 6, 14, 0, 0);
         LocalDateTime endDate = LocalDateTime.of(2020, 12, 31, 23, 59, 59);
