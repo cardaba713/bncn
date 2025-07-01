@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -176,4 +177,122 @@ class PriceControllerTest {
                 .andExpect(jsonPath("$.endDate").value("2020-12-31T23:59:59"));
     }
 
+    @Test
+    void testPriceNotFound() throws Exception {
+        // Test caso cuando no se encuentra precio aplicable
+        
+        // Given
+        when(priceService.findApplicablePrice(any(PriceQuery.class)))
+                .thenReturn(Optional.empty());
+
+        // When & Then
+        mockMvc.perform(get("/api/v1/prices")
+                .param("applicationDate", "2020-06-14T10:00:00")
+                .param("productId", "99999")
+                .param("brandId", "1"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void testInvalidParameters() throws Exception {
+        // Test caso con parámetros inválidos
+        
+        // When & Then
+        mockMvc.perform(get("/api/v1/prices")
+                .param("applicationDate", "invalid-date")
+                .param("productId", "35455")
+                .param("brandId", "1"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testMissingParameters() throws Exception {
+        // Test caso con parámetros faltantes
+        
+        // When & Then
+        mockMvc.perform(get("/api/v1/prices")
+                .param("applicationDate", "2020-06-14T10:00:00")
+                .param("productId", "35455"))
+                // Falta brandId
+                .andExpect(status().isBadRequest());
+    }
+
+    // Tests para cobertura de DTOs
+    @Test
+    void testPriceResponseDtoConstructors() {
+        // Test constructor vacío
+        PriceResponseDto emptyDto = new PriceResponseDto();
+        assertNull(emptyDto.getProductId());
+        assertNull(emptyDto.getBrandId());
+        assertNull(emptyDto.getPriceList());
+        assertNull(emptyDto.getStartDate());
+        assertNull(emptyDto.getEndDate());
+        assertNull(emptyDto.getPrice());
+
+        // Test constructor con parámetros
+        LocalDateTime startDate = LocalDateTime.of(2020, 6, 14, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(2020, 12, 31, 23, 59, 59);
+        BigDecimal price = new BigDecimal("35.50");
+        
+        PriceResponseDto dto = new PriceResponseDto(35455L, 1L, 1L, startDate, endDate, price);
+        assertEquals(35455L, dto.getProductId());
+        assertEquals(1L, dto.getBrandId());
+        assertEquals(1L, dto.getPriceList());
+        assertEquals(startDate, dto.getStartDate());
+        assertEquals(endDate, dto.getEndDate());
+        assertEquals(price, dto.getPrice());
+    }
+
+    @Test
+    void testPriceResponseDtoSetters() {
+        PriceResponseDto dto = new PriceResponseDto();
+        LocalDateTime startDate = LocalDateTime.of(2020, 6, 14, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(2020, 12, 31, 23, 59, 59);
+        BigDecimal price = new BigDecimal("35.50");
+
+        dto.setProductId(35455L);
+        dto.setBrandId(1L);
+        dto.setPriceList(1L);
+        dto.setStartDate(startDate);
+        dto.setEndDate(endDate);
+        dto.setPrice(price);
+
+        assertEquals(35455L, dto.getProductId());
+        assertEquals(1L, dto.getBrandId());
+        assertEquals(1L, dto.getPriceList());
+        assertEquals(startDate, dto.getStartDate());
+        assertEquals(endDate, dto.getEndDate());
+        assertEquals(price, dto.getPrice());
+    }
+
+    @Test
+    void testPriceRequestDtoConstructors() {
+        // Test constructor vacío
+        PriceRequestDto emptyDto = new PriceRequestDto();
+        assertNull(emptyDto.getApplicationDate());
+        assertNull(emptyDto.getProductId());
+        assertNull(emptyDto.getBrandId());
+
+        // Test constructor con parámetros
+        LocalDateTime applicationDate = LocalDateTime.of(2020, 6, 14, 10, 0);
+        PriceRequestDto dto = new PriceRequestDto(applicationDate, 35455L, 1L);
+        
+        assertEquals(applicationDate, dto.getApplicationDate());
+        assertEquals(35455L, dto.getProductId());
+        assertEquals(1L, dto.getBrandId());
+    }
+
+    @Test
+    void testPriceRequestDtoSetters() {
+        PriceRequestDto dto = new PriceRequestDto();
+        LocalDateTime applicationDate = LocalDateTime.of(2020, 6, 14, 10, 0);
+
+        dto.setApplicationDate(applicationDate);
+        dto.setProductId(35455L);
+        dto.setBrandId(1L);
+
+        assertEquals(applicationDate, dto.getApplicationDate());
+        assertEquals(35455L, dto.getProductId());
+        assertEquals(1L, dto.getBrandId());
+    }
 }
