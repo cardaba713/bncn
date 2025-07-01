@@ -1,13 +1,18 @@
 package com.zara.pricing_service.rest;
 
 import com.zara.pricing_service.domain.model.PriceVP;
+import com.zara.pricing_service.application.service.PriceServiceImpl;
 import com.zara.pricing_service.domain.model.PriceQuery;
 import com.zara.pricing_service.domain.port.in.PriceService;
+import com.zara.pricing_service.domain.port.out.PriceRepository;
 import com.zara.pricing_service.infrastructure.in.rest.PriceController;
 import com.zara.pricing_service.infrastructure.in.rest.PriceRequestDto;
 import com.zara.pricing_service.infrastructure.in.rest.PriceResponseDto;
+import com.zara.pricing_service.infrastructure.out.persistence.adapter.PriceRepositoryImpl;
 import com.zara.pricing_service.infrastructure.out.persistence.entity.PriceEntity;
+import com.zara.pricing_service.infrastructure.out.persistence.repository.PriceJpaRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -19,6 +24,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -31,6 +37,14 @@ class PriceControllerTest {
 
     @MockitoBean
     private PriceService priceService;
+
+
+    @MockitoBean
+    private PriceJpaRepository priceJpaRepository;
+
+    @InjectMocks
+    private PriceRepositoryImpl priceRepository;
+
 
     @Test
     void test1() throws Exception {
@@ -354,5 +368,18 @@ class PriceControllerTest {
         assertEquals(price, entity.getPrice());
         assertEquals("EUR", entity.getCurrency());
     }
+    
+    @Test
+    void constructor_ShouldInitializeService_WhenRepositoryProvided() {
+        // Given
+        PriceRepository repository = mock(PriceRepository.class);
+        
+        // When
+        PriceServiceImpl service = new PriceServiceImpl(repository);
+        
+        // Then
+        assertNotNull(service);
+    }
+    
 
 }
