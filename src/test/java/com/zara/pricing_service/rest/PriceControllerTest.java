@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zara.pricing_service.domain.model.Price;
 import com.zara.pricing_service.domain.model.PriceQuery;
 import com.zara.pricing_service.domain.port.in.PriceService;
+import com.zara.pricing_service.infrastructure.persistence.entity.PriceEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -295,4 +296,64 @@ class PriceControllerTest {
         assertEquals(35455L, dto.getProductId());
         assertEquals(1L, dto.getBrandId());
     }
+
+    // Tests para cobertura de PriceEntity
+    @Test
+    void testPriceEntityConstructor() {
+        // Test del constructor con parámetros
+        LocalDateTime startDate = LocalDateTime.of(2020, 6, 14, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(2020, 12, 31, 23, 59, 59);
+        BigDecimal price = new BigDecimal("35.50");
+        
+        PriceEntity entity = new PriceEntity(
+                1L,             // brandId
+                startDate,              // startDate
+                endDate,                // endDate
+                1L,           // priceList
+                35455L,       // productId
+                0,             // priority
+                price,                  // price
+                "EUR"          // currency
+        );
+        
+        assertNull(entity.getId()); // ID se genera automáticamente
+        assertEquals(1L, entity.getBrandId());
+        assertEquals(startDate, entity.getStartDate());
+        assertEquals(endDate, entity.getEndDate());
+        assertEquals(1L, entity.getPriceList());
+        assertEquals(35455L, entity.getProductId());
+        assertEquals(0, entity.getPriority());
+        assertEquals(price, entity.getPrice());
+        assertEquals("EUR", entity.getCurrency());
+    }
+
+    @Test
+    void testPriceEntitySetters() {
+        // Test de todos los setters
+        PriceEntity entity = new PriceEntity();
+        LocalDateTime startDate = LocalDateTime.of(2020, 6, 14, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(2020, 12, 31, 23, 59, 59);
+        BigDecimal price = new BigDecimal("35.50");
+        
+        entity.setId(100L);
+        entity.setBrandId(1L);
+        entity.setStartDate(startDate);
+        entity.setEndDate(endDate);
+        entity.setPriceList(1L);
+        entity.setProductId(35455L);
+        entity.setPriority(0);
+        entity.setPrice(price);
+        entity.setCurrency("EUR");
+        
+        assertEquals(100L, entity.getId());
+        assertEquals(1L, entity.getBrandId());
+        assertEquals(startDate, entity.getStartDate());
+        assertEquals(endDate, entity.getEndDate());
+        assertEquals(1L, entity.getPriceList());
+        assertEquals(35455L, entity.getProductId());
+        assertEquals(0, entity.getPriority());
+        assertEquals(price, entity.getPrice());
+        assertEquals("EUR", entity.getCurrency());
+    }
+
 }
