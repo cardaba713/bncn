@@ -1,4 +1,4 @@
-package com.zara.pricing_service.rest;
+package com.zara.pricing_service.infrastructure.in.rest;
 
 import com.zara.pricing_service.domain.model.PriceVP;
 import com.zara.pricing_service.domain.model.PriceQuery;

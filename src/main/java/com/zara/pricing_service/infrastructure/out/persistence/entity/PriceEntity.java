@@ -1,4 +1,4 @@
-package com.zara.pricing_service.infrastructure.persistence.entity;
+package com.zara.pricing_service.infrastructure.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

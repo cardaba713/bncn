@@ -1,6 +1,6 @@
-package com.zara.pricing_service.infrastructure.persistence.repository;
+package com.zara.pricing_service.infrastructure.out.persistence.repository;
 
-import com.zara.pricing_service.infrastructure.persistence.entity.PriceEntity;
+import com.zara.pricing_service.infrastructure.out.persistence.entity.PriceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,7 +19,7 @@ public interface PriceJpaRepository  extends JpaRepository<PriceEntity, Long> {
             "p.startDate <= :applicationDate AND " +
             "p.endDate >= :applicationDate " +
             "ORDER BY p.priority DESC LIMIT 1")
-    Optional<PriceEntity> findApplicablePrices(
+    Optional<PriceEntity> find(
             @Param("brandId") Long brandId,
             @Param("productId") Long productId,
             @Param("applicationDate") LocalDateTime applicationDate

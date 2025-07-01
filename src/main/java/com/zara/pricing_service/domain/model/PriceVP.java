@@ -40,7 +40,4 @@ public class PriceVP {
         this.currency = currency;
     }
 
-    public boolean isApplicableAt(LocalDateTime applicationDate) {
-        return !applicationDate.isBefore(startDate) && !applicationDate.isAfter(endDate);
-    }
 }

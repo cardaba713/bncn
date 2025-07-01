@@ -1,4 +1,4 @@
-package com.zara.pricing_service.rest;
+package com.zara.pricing_service.infrastructure.in.rest;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
